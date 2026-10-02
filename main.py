@@ -51,10 +51,11 @@ def get_real_embedding(text: str):
 def home():
     return {"status": "Active", "database": "Qdrant Node Connected"}
 
-# 4. Decoupled Core Data Gateway
-@app.post("/ask-hybrid-rag/")
+# 🔴 UNIVERSAL PRODUCTION ROUTE ENTRYPOINT
+@app.post("/ask-hybrid-rag")
 async def ask_rag(question: str, file: UploadFile = File(...), mode: str = "cloud"):
     file_content = await file.read()
+    # ... baki code poora same rahega ...
     pdf_stream = io.BytesIO(file_content)
     extracted_text = ""
     
