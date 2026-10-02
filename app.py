@@ -24,9 +24,8 @@ with col1:
         if uploaded_file is not None and user_query != "":
             with st.spinner("Connecting to live production FastAPI engine..."):
                 try:
-                    # 🔴 100% INDEPENDENT PRODUCTION BACKEND ROUTE LINK
+                    # app.py ke andar bina trailing slash ke direct clean domain endpoint lagana
                     backend_url = "https://onrender.com"
-                    
                     files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "application/pdf")}
                     params = {"question": user_query, "mode": mode_value}
                     
