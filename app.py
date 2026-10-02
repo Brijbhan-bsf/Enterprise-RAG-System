@@ -24,13 +24,16 @@ with col1:
         if uploaded_file is not None and user_query != "":
             with st.spinner("Connecting to live production FastAPI engine..."):
                 try:
-                    # app.py ke andar bina trailing slash ke direct clean domain endpoint lagana
+                    # 🔴 100% PRODUCTION COMPLIANT ROUTING GATEWAY SYSTEM
                     backend_url = "https://onrender.com"
-                    files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "application/pdf")}
-                    params = {"question": user_query, "mode": mode_value}
                     
-                    # Live internet request transmission to Render cluster
-                    response = requests.post(backend_url, params=params, files=files)
+                    # Parameters ko parameters dictionary ki jagah direct requests.post ke 'params' filter me specify karna
+                    files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "application/pdf")}
+                    query_params = {"question": user_query, "mode": mode_value}
+                    
+                    # Direct secure payload mapping transmission
+                    response = requests.post(backend_url, params=query_params, files=files)
+
                     
                     if response.status_code == 200:
                         result = response.json()
