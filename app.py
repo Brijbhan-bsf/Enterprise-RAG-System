@@ -4,11 +4,12 @@ import requests
 st.set_page_config(page_title="BSF AI Suite", layout="wide")
 
 st.title("⚡ Enterprise AI & RAG Portal")
-st.caption("Bihar Skill Foundation - Connected Full-Stack System (Decoupled)")
+st.caption("Bihar Skill Foundation - Connected Full-Stack System (Decoupled & Production Hosted)")
 st.divider()
 
 with st.sidebar:
     st.markdown("### 🌐 Routing Gateway")
+    # Live Hosted Server par default Cloud node selected rahega
     execution_mode = st.radio("Select Processing Node", ["Cloud (Gemini API)", "Local (Ollama Engine)"])
     mode_value = "cloud" if "Cloud" in execution_mode else "local"
 
@@ -21,13 +22,15 @@ with col1:
     
     if st.button("Run AI Processing Pipeline"):
         if uploaded_file is not None and user_query != "":
-            with st.spinner("Connecting to FastAPI backend router..."):
+            with st.spinner("Connecting to live production FastAPI engine..."):
                 try:
-                    backend_url = "http://localhost:8000/ask-hybrid-rag/"
+                    # 🔴 100% INDEPENDENT PRODUCTION BACKEND ROUTE LINK
+                    backend_url = "https://onrender.com"
                     
                     files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "application/pdf")}
                     params = {"question": user_query, "mode": mode_value}
                     
+                    # Live internet request transmission to Render cluster
                     response = requests.post(backend_url, params=params, files=files)
                     
                     if response.status_code == 200:
@@ -39,16 +42,17 @@ with col1:
                         st.error(f"Backend Engine Error: Status Code {response.status_code}")
                         
                 except requests.exceptions.ConnectionError:
-                    st.error("🔴 Error: FastAPI backend server nahi chal raha hai! Pehle main.py ko run karein.")
+                    st.error("🔴 Error: Live backend server se response timeout hua. Kripya check karein ki Render application sleeping mode me to nahi hai.")
         else:
             st.warning("Kripya pehle document upload karein aur apna sawaal type karein.")
 
 with col2:
     st.markdown("""
         <div style="background-color:#FFFFFF; padding:20px; border-radius:10px; border:1px solid #E2E8F0;">
-            <h4>⚙️ Full-Stack Decoupled Info</h4>
-            <p><b>Frontend:</b> Streamlit (Port 8501)</p>
-            <p><b>Backend:</b> FastAPI (Port 8000)</p>
-            <p><b>Future Proof:</b> Decoupled Architecture Ready.</p>
+            <h4>⚙️ Production Decoupled Architecture</h4>
+            <p><b>Frontend Interface Layer:</b> Streamlit UI Cloud Server</p>
+            <p><b>Backend Computing Layer:</b> FastAPI Independent Node (Render Cloud Clusters)</p>
+            <p><b>Data Layer Gateway:</b> Qdrant Engine Sandbox</p>
+            <p style="color:#10B981;"><b>Status:</b> Fully Enterprise Compliance Ready!</p>
         </div>
     """, unsafe_allow_html=True)
